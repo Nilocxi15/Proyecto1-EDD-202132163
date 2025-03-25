@@ -2,10 +2,14 @@
 #include <limits>
 #include <stdexcept>
 
+#include "./gameHistory/GameHistory.hpp"
+
 using namespace std;
 
 int main()
 {
+
+    GameHistory gameHistory;
 
     bool optionIsCorrect = false;
     int option = 0;
@@ -43,8 +47,8 @@ int main()
             /* code */
             break;
         case 2:
-            cout << "Historial de partidas" << endl;
-            /* code */
+            system("clear");
+            gameHistory.showGameHistory();
             break;
         case 3:
             cout << "Saliendo del juego..." << endl;
