@@ -1,74 +1,76 @@
 #include "ReadFile.hpp"
 
-vector<string> ReadFile::read()
+void ReadFile::test()
+{
+    for (int i = 0; i < 10; i++)
+    {
+        queue.enqueue(to_string(i));
+    }
+
+    queue.print();
+}
+
+void ReadFile::loadData()
 {
     ifstream file;
-    string content;
-    string tempContent;
+    string fileContent;
 
-    file.open("/home/jixcolin/Documentos/DocumentosUsac/EDD/Proyecto1/data/GameHistory.csv", ios::in);
+    vector<string> temporalString(3);
+
+    file.open("/home/jixcolin/Documentos/UNIVERSIDAD/EDD/Proyecto1-EDD-202132163/data/GameHistory.csv", ios::in);
 
     if (file.fail())
     {
-        cout << "Error al abrir o leer el historial de partidas" << endl;
+        cout << "Error al abrir o leer el archivo" << endl;
         exit(1);
     }
 
     while (!file.eof())
     {
-        getline(file, tempContent);
-        content += tempContent + "\n";
+        getline(file, fileContent);
+        stringstream ss(fileContent);
+        string item;
+        int index = 0;
+
+        while (getline(ss, item, ',') && index < 3)
+        {
+            temporalString[index] = item;
+            index++;
+        }
+
+        for (const auto &str : temporalString)
+        {
+            queue.enqueue(str);
+        }
     }
 
-    vector<string> dataPlayers = splitData(content);
-
-    return dataPlayers;
-}
-
-void ReadFile::sortData()
-{
-    vector<string> data = read();
-    int vectorSize = data.size();
-    int mainVectorSize = vectorSize / 3;
-    vector<vector<string>> dataPlayers(mainVectorSize);
-    vector<string> tempData(3);
-
-    for (int i = 0; i <= vectorSize; i++)
+    int mainVectorSize = queue.length() / 3;
+    vector<vector<string>> dataVector(mainVectorSize, vector<string>(3));
+    
+    for (int i = 0; i < mainVectorSize; i++)
     {
         for (int i = 0; i < 3; i++)
         {
-            string tempString = data[i];
-            tempData.push_back(tempString);
+            temporalString[i] = queue.dequeue();
         }
-        
+        dataVector[i] = temporalString;
     }
+    
+    for (const auto &row : dataVector)
+    {
+        for (const auto &col : row)
+        {
+            cout << col << " ";
+        }
+        cout << endl;
+    }
+
+    //mainVector = dataVector;
+
+    file.close();
 }
 
-vector<string> ReadFile::splitData(const string &data)
+void ReadFile::clearData()
 {
-    vector<string> words;
-    string word;
-
-    for (char c : data)
-    {
-        if (c == ',' || c == '\n')
-        {
-            if (!word.empty())
-            {
-                words.push_back(word);
-                word.clear();
-            }
-        }
-        else
-        {
-            word += c;
-        }
-    }
-
-    if (!word.empty())
-    {
-        words.push_back(word);
-    }
-
-    return words;
+    queue.clear();
 }
