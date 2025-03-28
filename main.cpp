@@ -79,7 +79,7 @@ int main()
                 readFile.scoreSort();
                 break;
             case 2:
-                // readFile.nameSort();
+                readFile.nameSort();
                 break;
             default:
                 system("clear");
