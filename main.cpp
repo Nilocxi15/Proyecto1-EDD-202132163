@@ -76,7 +76,7 @@ int main()
             switch (sortOption)
             {
             case 1:
-                // readFile.scoreSort();
+                readFile.scoreSort();
                 break;
             case 2:
                 // readFile.nameSort();

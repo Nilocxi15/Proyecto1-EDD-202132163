@@ -1,13 +1,39 @@
 #include "ReadFile.hpp"
 
-void ReadFile::test()
+void ReadFile::scoreSort()
 {
-    for (int i = 0; i < 10; i++)
+    if (mainVector.empty())
     {
-        queue.enqueue(to_string(i));
+        cout << "No hay datos en el vector" << endl;
+        return;
     }
+    else
+    {
+        for (size_t i = 1; i < mainVector.size(); ++i)
+        {
+            vector<string> key = mainVector[i];
+            int j = i - 1;
 
-    queue.print();
+            while (j >= 0 && stoi(mainVector[j][1]) < stoi(key[1]))
+            {
+                mainVector[j + 1] = mainVector[j];
+                j--;
+            }
+            mainVector[j + 1] = key;
+        }
+
+        system("clear");
+        cout << "---------- HISTORIAL DE PARTIDAS ORDENADO POR PUNTAJE ----------" << endl;
+        cout << "Nombre\t\tPuntaje\t\tMovimientos" << endl;
+        for (const auto &row : mainVector)
+        {
+            cout << row[0] << "\t\t" << row[1] << "\t\t" << row[2] << endl;
+        }
+    }
+}
+
+void ReadFile::nameSort() {
+    
 }
 
 void ReadFile::loadData()
@@ -46,26 +72,24 @@ void ReadFile::loadData()
 
     int mainVectorSize = queue.length() / 3;
     vector<vector<string>> dataVector(mainVectorSize, vector<string>(3));
-    
+
     for (int i = 0; i < mainVectorSize; i++)
     {
-        for (int i = 0; i < 3; i++)
+        for (int j = 0; j < 3; j++)
         {
-            temporalString[i] = queue.dequeue();
+            temporalString[j] = queue.dequeue();
         }
         dataVector[i] = temporalString;
     }
-    
-    for (const auto &row : dataVector)
-    {
-        for (const auto &col : row)
-        {
-            cout << col << " ";
-        }
-        cout << endl;
-    }
 
-    //mainVector = dataVector;
+    if (dataVector.empty())
+    {
+        cout << "No hay datos en el vector" << endl;
+    }
+    else
+    {
+        this->mainVector = dataVector;
+    }
 
     file.close();
 }

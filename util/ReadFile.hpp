@@ -15,8 +15,10 @@ private:
     Queue queue;
     vector<vector<string>> mainVector;
 
-public:
-    void test();
+    vector<vector<string>> getVector();
+    void setVector(const vector<vector<string>>& dataVector);
+
+public:    
     void scoreSort();
     void nameSort();
 
