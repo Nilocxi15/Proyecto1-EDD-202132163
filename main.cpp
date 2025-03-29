@@ -3,6 +3,7 @@
 #include <stdexcept>
 
 #include "./util/ReadFile.hpp"
+#include "./gameplay/gameplay.hpp"
 
 using namespace std;
 
@@ -10,6 +11,7 @@ int main()
 {
 
     ReadFile readFile;
+    gameplay game;
 
     bool optionIsCorrect = false;
     int option = 0;
@@ -43,8 +45,7 @@ int main()
         switch (option)
         {
         case 1:
-            cout << "Iniciando el juego..." << endl;
-            /* code */
+            game.startGame();
             break;
         case 2:
         {
