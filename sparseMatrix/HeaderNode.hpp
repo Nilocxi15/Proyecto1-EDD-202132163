@@ -15,13 +15,13 @@ public:
     HeaderNode(int id);
     ~HeaderNode();
 
-    // Getters
+    // Getters y Setters
     int getId() const;
     HeaderNode *getNext() const;
     HeaderNode *getPrev() const;
     CellNode *getAccess() const;
 
-    // Setters
+    //
     void setId(const int id);
     void setNext(HeaderNode *next);
     void setPrev(HeaderNode *prev);

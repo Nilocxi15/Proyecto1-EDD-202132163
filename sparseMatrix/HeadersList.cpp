@@ -1,7 +1,7 @@
 #include "HeadersList.hpp"
 
 // Constructor y destructor
-HeadersList::HeadersList(const string type)
+HeadersList::HeadersList(string type)
 {
     this->type = type;
     this->first = nullptr;
@@ -22,33 +22,7 @@ HeadersList::~HeadersList()
     }
 }
 
-// Getters
-int HeadersList::length() const
-{
-    return this->size;
-}
-
-HeaderNode *HeadersList::get(int id) const
-{
-    HeaderNode *temp = this->first;
-    while (temp != nullptr)
-    {
-        if (temp->getId() == id)
-        {
-            return temp;
-        }
-        temp = temp->getNext();
-    }
-    return nullptr;
-}
-
-// Setters
-void HeadersList::setType(string type)
-{
-    this->type = type;
-}
-
-// Métodos
+// Metodos
 void HeadersList::add(HeaderNode *newNode)
 {
     if (first == nullptr)
@@ -105,4 +79,30 @@ void HeadersList::print()
         cout << temp->getId() << " ";
         temp = temp->getNext();
     }
+}
+
+// Getters
+int HeadersList::length() const
+{
+    return this->size;
+}
+
+HeaderNode *HeadersList::get(int id) const
+{
+    HeaderNode *temp = this->first;
+    while (temp != nullptr)
+    {
+        if (temp->getId() == id)
+        {
+            return temp;
+        }
+        temp = temp->getNext();
+    }
+    return nullptr;
+}
+
+// Setters
+void HeadersList::setType(string type)
+{
+    this->type = type;
 }

@@ -1,5 +1,4 @@
 #pragma once
-
 #include <iostream>
 
 #include "HeaderNode.hpp"
@@ -16,17 +15,17 @@ private:
 
 public:
     // Constructor y destructor
-    HeadersList(const string type);
+    HeadersList(string type);
     ~HeadersList();
+
+    // Metodos
+    void add(HeaderNode *newNode);
+    void print();
 
     // Getters
     int length() const;
     HeaderNode *get(int id) const;
 
     // Setters
-    void setType(const string type);
-
-    // Métodos
-    void add(HeaderNode *newNode);
-    void print();
+    void setType(string type);
 };

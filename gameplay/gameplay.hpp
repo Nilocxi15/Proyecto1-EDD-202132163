@@ -7,11 +7,15 @@
 #include <limits>
 #include <stdexcept>
 
+#include "../sparseMatrix/SparseMatrix.hpp"
+
 using namespace std;
 
 class gameplay
 {
 private:
+    SparseMatrix matrix;
+
     string playerName;
 
     int playerScore;

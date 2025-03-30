@@ -30,9 +30,9 @@ public:
     CellNode *getRight() const;
 
     // Setters
-    void setX(int x);
-    void setY(int y);
-    void setValue(string value);
+    void setX(const int x);
+    void setY(const int y);
+    void setValue(const string value);
     void setUp(CellNode *up);
     void setDown(CellNode *down);
     void setLeft(CellNode *left);

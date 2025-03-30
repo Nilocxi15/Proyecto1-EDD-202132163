@@ -141,19 +141,6 @@ void SparseMatrix::columnIterator(int column)
     }
 }
 
-void SparseMatrix::printMatrix()
-{
-    cout << "--------------Matriz dispersa------------------" << endl;
-    for (int i = 1; i <= rows.length(); i++)
-    {
-        for (int j = 1; j <= columns.length(); j++)
-        {
-            cout << search(i, j) << "\t";
-        }
-        cout << endl;
-    }
-}
-
 // Getters
 string SparseMatrix::search(int x, int y) const
 {
@@ -174,4 +161,17 @@ string SparseMatrix::search(int x, int y) const
     }
 
     return "";
+}
+
+void SparseMatrix::printMatrix()
+{
+    cout << "--------------Matriz dispersa------------------" << endl;
+    for (int i = 1; i <= rows.length(); i++)
+    {
+        for (int j = 1; j <= columns.length(); j++)
+        {
+            cout << search(i, j) << "\t";
+        }
+        cout << endl;
+    }
 }

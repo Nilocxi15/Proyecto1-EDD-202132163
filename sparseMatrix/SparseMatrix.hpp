@@ -13,7 +13,7 @@ private:
     HeadersList columns;
 
 public:
-// Constructor y destructor
+    // Constructor y destructor
     SparseMatrix();
     ~SparseMatrix();
 

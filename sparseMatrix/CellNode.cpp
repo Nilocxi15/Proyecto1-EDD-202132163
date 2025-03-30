@@ -1,6 +1,6 @@
 #include "CellNode.hpp"
 
-// Constructor y destructor
+// Constructor y Destructor
 CellNode::CellNode(int x, int y, string value)
 {
     this->x = x;
@@ -14,7 +14,6 @@ CellNode::CellNode(int x, int y, string value)
 
 CellNode::~CellNode()
 {
-    // Destructor
 }
 
 // Getters
@@ -54,17 +53,17 @@ CellNode *CellNode::getRight() const
 }
 
 // Setters
-void CellNode::setX(int x)
+void CellNode::setX(const int x)
 {
     this->x = x;
 }
 
-void CellNode::setY(int y)
+void CellNode::setY(const int y)
 {
     this->y = y;
 }
 
-void CellNode::setValue(string value)
+void CellNode::setValue(const string value)
 {
     this->value = value;
 }

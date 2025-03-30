@@ -51,7 +51,7 @@ void gameplay::startGame()
 
     this->startTime = chrono::system_clock::now();
 
-    //displayMaze(x, y, z);
+    displayMaze(x, y, z);
 
     /*
 
@@ -69,12 +69,23 @@ void gameplay::startGame()
 void gameplay::displayMaze(int x, int y, int z)
 {
     cout << "Dimensiones del laberinto: " << x << " " << y << " " << z << endl;
+
+    for (int i = 0; i < 10; i++)
+    {
+        for (int j = 0; j < 10; j++)
+        {
+            matrix.insert(i, j, "X");
+        }
+    }
+
+    matrix.printMatrix();
+
     /*
     do
     {
-        
+
     } while (playerHealth > 0);
-    
+
     system("clear");
     cout << "---------- GAME OVER ----------" << endl;
     this->endTime = chrono::system_clock::now();

@@ -11,7 +11,6 @@ HeaderNode::HeaderNode(int id)
 
 HeaderNode::~HeaderNode()
 {
-    // Destructor
 }
 
 // Getters
