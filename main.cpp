@@ -3,7 +3,7 @@
 #include <stdexcept>
 
 #include "./util/ReadFile.hpp"
-#include "./gameplay/gameplay.hpp"
+#include "./gameplay/Gameplay.hpp"
 
 using namespace std;
 

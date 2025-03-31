@@ -5,6 +5,24 @@ SparseMatrix::SparseMatrix() : rows("row"), columns("column") {}
 
 SparseMatrix::~SparseMatrix() {}
 
+SparseMatrix::SparseMatrix(const SparseMatrix &other) : rows("row"), columns("column")
+{
+    for (int i = 1; i <= other.rows.length(); i++)
+    {
+        HeaderNode *rowHeader = other.rows.get(i);
+        if (rowHeader != nullptr)
+        {
+            CellNode *current = rowHeader->getAccess();
+            while (current != nullptr)
+            {
+                // Insertar cada celda en la nueva matriz
+                this->insert(current->getX(), current->getY(), current->getValue());
+                current = current->getRight();
+            }
+        }
+    }
+}
+
 // Metodos
 void SparseMatrix::insert(int x, int y, string value)
 {

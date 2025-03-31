@@ -17,6 +17,9 @@ public:
     SparseMatrix();
     ~SparseMatrix();
 
+    // Constructor de copia
+    SparseMatrix(const SparseMatrix &other);
+
     // Métodos
     void insert(int x, int y, string value);
     void rowIterator(int row);

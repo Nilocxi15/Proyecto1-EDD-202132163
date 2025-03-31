@@ -8,6 +8,7 @@
 #include <stdexcept>
 
 #include "../sparseMatrix/SparseMatrix.hpp"
+#include "GenerateMap.hpp"
 
 using namespace std;
 
