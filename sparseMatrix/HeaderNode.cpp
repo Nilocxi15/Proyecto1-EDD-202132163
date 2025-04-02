@@ -11,6 +11,13 @@ HeaderNode::HeaderNode(int id)
 
 HeaderNode::~HeaderNode()
 {
+    CellNode *currentCell = this->access;
+    while (currentCell != nullptr)
+    {
+        CellNode *nextCell = currentCell->getRight();
+        delete currentCell;
+        currentCell = nextCell;
+    }
 }
 
 // Getters

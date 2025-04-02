@@ -3,23 +3,29 @@
 // Constructor y destructor
 SparseMatrix::SparseMatrix() : rows("row"), columns("column") {}
 
-SparseMatrix::~SparseMatrix() {}
-
-SparseMatrix::SparseMatrix(const SparseMatrix &other) : rows("row"), columns("column")
+SparseMatrix::~SparseMatrix()
 {
-    for (int i = 1; i <= other.rows.length(); i++)
+    HeaderNode *currentRow = rows.getFirst();
+    while (currentRow != nullptr)
     {
-        HeaderNode *rowHeader = other.rows.get(i);
-        if (rowHeader != nullptr)
+        CellNode *currentCell = currentRow->getAccess();
+        while (currentCell != nullptr)
         {
-            CellNode *current = rowHeader->getAccess();
-            while (current != nullptr)
-            {
-                // Insertar cada celda en la nueva matriz
-                this->insert(current->getX(), current->getY(), current->getValue());
-                current = current->getRight();
-            }
+            CellNode *nextCell = currentCell->getRight();
+            delete currentCell;
+            currentCell = nextCell;
         }
+        HeaderNode *nextRow = currentRow->getNext();
+        delete currentRow;
+        currentRow = nextRow;
+    }
+
+    HeaderNode *currentColumn = columns.getFirst();
+    while (currentColumn != nullptr)
+    {
+        HeaderNode *nextColumn = currentColumn->getNext();
+        delete currentColumn;
+        currentColumn = nextColumn;
     }
 }
 

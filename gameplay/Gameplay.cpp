@@ -67,7 +67,7 @@ void gameplay::displayMaze(int x, int y, int z)
 
     do
     {
-        system("clear");
+        //system("clear");
         cout << "---------- JUGANDO ----------" << endl;
         cout << "Salud: " << this->playerHealth << endl;
         cout << "Usted se encuentra en el laberinto " << currentMaze << "\n\n"

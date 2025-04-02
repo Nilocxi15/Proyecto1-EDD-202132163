@@ -12,17 +12,15 @@ HeadersList::HeadersList(string type)
 HeadersList::~HeadersList()
 {
     HeaderNode *current = this->first;
-    HeaderNode *next = nullptr;
-
     while (current != nullptr)
     {
-        next = current->getNext();
+        HeaderNode *next = current->getNext();
         delete current;
         current = next;
     }
 }
 
-// Metodos
+// Métodos
 void HeadersList::add(HeaderNode *newNode)
 {
     if (first == nullptr)
@@ -99,6 +97,11 @@ HeaderNode *HeadersList::get(int id) const
         temp = temp->getNext();
     }
     return nullptr;
+}
+
+HeaderNode *HeadersList::getFirst() const
+{
+    return this->first;
 }
 
 // Setters

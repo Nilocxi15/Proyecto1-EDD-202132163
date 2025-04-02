@@ -11,14 +11,15 @@ DoubleLinkedList::DoubleLinkedList()
 DoubleLinkedList::~DoubleLinkedList()
 {
     Node *current = this->head;
-    Node *next;
-
     while (current != nullptr)
     {
-        next = current->getNext();
+        Node *next = current->getNext();
         delete current;
         current = next;
     }
+    this->head = nullptr;
+    this->tail = nullptr;
+    this->size = 0;
 }
 
 // Getters
@@ -47,7 +48,7 @@ SparseMatrix DoubleLinkedList::getPrev(int iterator) const
     {
         current = current->getPrev();
     }
-    
+
     return current->getData();
 }
 
@@ -67,6 +68,7 @@ SparseMatrix DoubleLinkedList::getFirst() const
 void DoubleLinkedList::append(const SparseMatrix &sparseMatrix)
 {
     Node *newNode = new Node(sparseMatrix);
+    // El error se produce aquí
 
     if (this->head == nullptr && this->tail == nullptr)
     {

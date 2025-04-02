@@ -14,6 +14,7 @@ DoubleLinkedList GenerateMap::generateMaze(int x, int y, int z) const
                 maze.insert(j, k, "X");
             }
         }
+        mazeList.append(maze);
     }
 
     return mazeList;

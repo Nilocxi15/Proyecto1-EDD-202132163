@@ -25,6 +25,7 @@ public:
     // Getters
     int length() const;
     HeaderNode *get(int id) const;
+    HeaderNode *getFirst() const;
 
     // Setters
     void setType(string type);
