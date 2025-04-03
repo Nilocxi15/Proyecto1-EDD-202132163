@@ -12,8 +12,7 @@ private:
 public:
     // Constructores y destructor
     Node(SparseMatrix matrix);
-    Node();
-    //~Node();
+    ~Node();
     // Getters
     SparseMatrix getData() const;
     Node *getNext() const;

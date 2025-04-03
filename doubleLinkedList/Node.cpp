@@ -8,11 +8,9 @@ Node::Node(SparseMatrix matrix)
     this->prev = nullptr;
 }
 
-/*
 Node::~Node()
 {
 }
-*/
 
 // Getters
 SparseMatrix Node::getData() const

@@ -24,15 +24,16 @@ void ReadFile::scoreSort()
 
         system("clear");
         cout << "---------- HISTORIAL DE PARTIDAS ORDENADO POR PUNTAJE ----------" << endl;
-        cout << "Nombre\t\tPuntaje\t\tMovimientos" << endl;
+        cout << "Nombre\t\tPuntaje\t\tMovimientos\t\tTiempo (mins)" << endl;
         for (const auto &row : mainVector)
         {
-            cout << row[0] << "\t\t" << row[1] << "\t\t" << row[2] << endl;
+            cout << row[0] << "\t\t" << row[1] << "\t\t" << row[2] << "\t\t" << row[3] << endl;
         }
     }
 }
 
-void ReadFile::nameSort() {
+void ReadFile::nameSort()
+{
     if (mainVector.empty())
     {
         cout << "No hay datos en el vector" << endl;
@@ -47,21 +48,20 @@ void ReadFile::nameSort() {
 
             while (j >= 0 && mainVector[j][0] > key[0])
             {
-            mainVector[j + 1] = mainVector[j];
-            j--;
+                mainVector[j + 1] = mainVector[j];
+                j--;
             }
             mainVector[j + 1] = key;
         }
 
         system("clear");
         cout << "---------- HISTORIAL DE PARTIDAS ORDENADO POR PUNTAJE ----------" << endl;
-        cout << "Nombre\t\tPuntaje\t\tMovimientos" << endl;
+        cout << "Nombre\t\tPuntaje\t\tMovimientos\t\tTiempo (mins)" << endl;
         for (const auto &row : mainVector)
         {
-            cout << row[0] << "\t\t" << row[1] << "\t\t" << row[2] << endl;
+            cout << row[0] << "\t\t" << row[1] << "\t\t" << row[2] << "\t\t" << row[3] << endl;
         }
     }
-        
 }
 
 void ReadFile::loadData()
@@ -69,9 +69,9 @@ void ReadFile::loadData()
     ifstream file;
     string fileContent;
 
-    vector<string> temporalString(3);
+    vector<string> temporalString(4);
 
-    file.open("/home/jixcolin/Documentos/UNIVERSIDAD/EDD/Proyecto1-EDD-202132163/data/GameHistory.csv", ios::in);
+    file.open("/home/jixcolin/Documentos/DocumentosUsac/EDD/Proyecto1/data/GameHistory.csv", ios::in);
 
     if (file.fail())
     {
@@ -86,7 +86,7 @@ void ReadFile::loadData()
         string item;
         int index = 0;
 
-        while (getline(ss, item, ',') && index < 3)
+        while (getline(ss, item, ',') && index < 4)
         {
             temporalString[index] = item;
             index++;
@@ -98,12 +98,12 @@ void ReadFile::loadData()
         }
     }
 
-    int mainVectorSize = queue.length() / 3;
-    vector<vector<string>> dataVector(mainVectorSize, vector<string>(3));
+    int mainVectorSize = queue.length() / 4;
+    vector<vector<string>> dataVector(mainVectorSize, vector<string>(4));
 
     for (int i = 0; i < mainVectorSize; i++)
     {
-        for (int j = 0; j < 3; j++)
+        for (int j = 0; j < 4; j++)
         {
             temporalString[j] = queue.dequeue();
         }
