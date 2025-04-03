@@ -1,7 +1,7 @@
 #include "Node.hpp"
 
 // Constructor y destructor
-Node::Node(SparseMatrix matrix)
+Node::Node(SparseMatrix *matrix)
 {
     this->matrix = matrix;
     this->next = nullptr;
@@ -13,23 +13,23 @@ Node::~Node()
 }
 
 // Getters
-SparseMatrix Node::getData() const
+SparseMatrix *Node::getData() const
 {
-    return this->matrix;
+    return matrix;
 }
 
 Node *Node::getNext() const
 {
-    return this->next;
+    return next;
 }
 
 Node *Node::getPrev() const
 {
-    return this->prev;
+    return prev;
 }
 
 // Setters
-void Node::setData(SparseMatrix matrix)
+void Node::setData(SparseMatrix *matrix)
 {
     this->matrix = matrix;
 }

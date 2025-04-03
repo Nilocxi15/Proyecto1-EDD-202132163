@@ -28,7 +28,7 @@ int DoubleLinkedList::length() const
     return this->size;
 }
 
-SparseMatrix DoubleLinkedList::getNext(int iterator) const
+SparseMatrix *DoubleLinkedList::getNext(int iterator) const
 {
     Node *current = this->head;
 
@@ -40,7 +40,7 @@ SparseMatrix DoubleLinkedList::getNext(int iterator) const
     return current->getData();
 }
 
-SparseMatrix DoubleLinkedList::getPrev(int iterator) const
+SparseMatrix *DoubleLinkedList::getPrev(int iterator) const
 {
     Node *current = this->tail;
 
@@ -52,7 +52,7 @@ SparseMatrix DoubleLinkedList::getPrev(int iterator) const
     return current->getData();
 }
 
-SparseMatrix DoubleLinkedList::getFirst() const
+SparseMatrix *DoubleLinkedList::getFirst() const
 {
     if (this->head != nullptr)
     {
@@ -65,10 +65,14 @@ SparseMatrix DoubleLinkedList::getFirst() const
 }
 
 // Métodos
-void DoubleLinkedList::append(const SparseMatrix &sparseMatrix)
+void DoubleLinkedList::append(SparseMatrix *sparseMatrix)
 {
+    if (sparseMatrix == nullptr)
+    {
+        throw std::invalid_argument("No se puede agregar una matriz nula");
+    }
+
     Node *newNode = new Node(sparseMatrix);
-    // El error se produce aquí
 
     if (this->head == nullptr && this->tail == nullptr)
     {

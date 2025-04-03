@@ -5,21 +5,22 @@
 class Node
 {
 private:
-    SparseMatrix matrix;
+    SparseMatrix *matrix;
     Node *next;
     Node *prev;
 
 public:
     // Constructores y destructor
-    Node(SparseMatrix matrix);
+    explicit Node(SparseMatrix *matrix); // Constructor con un solo parámetro
     ~Node();
+
     // Getters
-    SparseMatrix getData() const;
+    SparseMatrix *getData() const;
     Node *getNext() const;
     Node *getPrev() const;
 
     // Setters
-    void setData(SparseMatrix matrix);
+    void setData(SparseMatrix *matrix);
     void setNext(Node *next);
     void setPrev(Node *prev);
 };

@@ -24,10 +24,10 @@ public:
 
     // Getters
     int length() const;
-    SparseMatrix getNext(int iterator) const;
-    SparseMatrix getPrev(int iterator) const;
-    SparseMatrix getFirst() const;
+    SparseMatrix *getNext(int iterator) const;
+    SparseMatrix *getPrev(int iterator) const;
+    SparseMatrix *getFirst() const;
 
     // Métodos
-    void append(const SparseMatrix &sparseMatrix);
+    void append(SparseMatrix *sparseMatrix);
 };
