@@ -56,21 +56,24 @@ void gameplay::startGame()
 
 void gameplay::displayMaze(int x, int y, int z)
 {
-    SparseMatrix temporalMaze;
+    SparseMatrix *temporalMaze;
     GenerateMap map;
 
     DoubleLinkedList mazeList = map.generateMaze(x, y, z);
     int currentMaze = 1;
     int moveOption = 0;
+    int halfSize = mazeList.length() / 2;
+
+    temporalMaze = mazeList.getFirst();
 
     do
     {
-        // system("clear");
+        system("clear");
         cout << "---------- JUGANDO ----------" << endl;
         cout << "Salud: " << this->playerHealth << endl;
         cout << "Usted se encuentra en el laberinto " << currentMaze << "\n\n"
              << endl;
-
+        temporalMaze->printMatrix();
         cout << "\n\n"
              << "---------- OPCIONES ----------" << endl;
         cout << "1. Moverse arriba" << endl;
@@ -112,9 +115,44 @@ void gameplay::displayMaze(int x, int y, int z)
             playerMoves++;
             break;
         case 5:
+        {
+            if (currentMaze == mazeList.length())
+            {
+                cout << "No se puede avanzar, ya no hay laberintos adelante" << endl;
+                this_thread::sleep_for(chrono::seconds(3));
+            }
+            else if (currentMaze <= halfSize)
+            {
+                temporalMaze = mazeList.getNext(currentMaze);
+                currentMaze++;
+            }
+            else if (currentMaze > halfSize)
+            {
+                int iterator = mazeList.length() - currentMaze;
+                temporalMaze = mazeList.getPrev(iterator);
+                currentMaze++;
+            }
             playerMoves++;
             break;
+        }
         case 6:
+            if (currentMaze == 1)
+            {
+                cout << "No se puede avanzar, ya no hay laberintos atras" << endl;
+                this_thread::sleep_for(chrono::seconds(3));
+            }
+            else if (currentMaze <= halfSize)
+            {
+                int prevMaze = currentMaze - 2;
+                temporalMaze = mazeList.getNext(prevMaze);
+                currentMaze--;
+            }
+            else if (currentMaze > halfSize)
+            {
+                int iterator = mazeList.length() - currentMaze + 2;
+                temporalMaze = mazeList.getPrev(iterator);
+                currentMaze--;
+            }
             playerMoves++;
             break;
         default:
@@ -122,7 +160,7 @@ void gameplay::displayMaze(int x, int y, int z)
             break;
         }
 
-        playerHealth = playerHealth - 10;
+        playerHealth = playerHealth - 5;
 
     } while (playerHealth > 0);
 

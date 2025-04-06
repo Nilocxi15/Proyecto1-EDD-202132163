@@ -44,7 +44,7 @@ SparseMatrix *DoubleLinkedList::getPrev(int iterator) const
 {
     Node *current = this->tail;
 
-    for (int i = 0; i < iterator; i++)
+    for (int i = 0; i < iterator - 1; i++)
     {
         current = current->getPrev();
     }
