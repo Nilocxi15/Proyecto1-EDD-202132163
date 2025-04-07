@@ -19,9 +19,9 @@ public:
 
     // Métodos
     void insert(int x, int y, string value);
-    void rowIterator(int row);
-    void columnIterator(int column);
-    void printMatrix();
+    void editValueLU(int x, int y, string value);
+    void editValueRD(int x, int y, string value);
+    void printMatrix();    
 
     // Getters
     string search(int x, int y) const;

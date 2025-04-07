@@ -28,6 +28,10 @@ public:
     SparseMatrix *getPrev(int iterator) const;
     SparseMatrix *getFirst() const;
 
+    // Setters
+    void insertNext(SparseMatrix *sparseMatrix);
+    void insertPrev(SparseMatrix *sparseMatrix);
+
     // Métodos
     void append(SparseMatrix *sparseMatrix);
 };

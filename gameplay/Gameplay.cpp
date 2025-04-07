@@ -63,6 +63,8 @@ void gameplay::displayMaze(int x, int y, int z)
     int currentMaze = 1;
     int moveOption = 0;
     int halfSize = mazeList.length() / 2;
+    int posX = 1;
+    int posY = 1;
 
     temporalMaze = mazeList.getFirst();
 
@@ -103,15 +105,51 @@ void gameplay::displayMaze(int x, int y, int z)
         switch (moveOption)
         {
         case 1:
+            if (posY == 1)
+            {
+                cout << "No se puede mover hacia arriba, ya no hay casillas en esa direccion" << endl;
+                this_thread::sleep_for(chrono::seconds(3));
+                continue;
+            }
+            temporalMaze->editValueLU(posX, posY, ".");
+            posY--;
+            temporalMaze->editValueLU(posX, posY, "J");
             playerMoves++;
             break;
         case 2:
+            if (posY == y)
+            {
+                cout << "No se puede mover hacia abajo, ya no hay casillas en esa direccion" << endl;
+                this_thread::sleep_for(chrono::seconds(3));
+                continue;
+            }
+            temporalMaze->editValueRD(posX, posY, ".");
+            posY++;
+            temporalMaze->editValueRD(posX, posY, "J");
             playerMoves++;
             break;
         case 3:
+            if (posX == 1)
+            {
+                cout << "No se puede mover hacia la izquierda, ya no hay casillas en esa direccion" << endl;
+                this_thread::sleep_for(chrono::seconds(3));
+                continue;
+            }
+            temporalMaze->editValueLU(posX, posY, ".");
+            posX--;
+            temporalMaze->editValueLU(posX, posY, "J");
             playerMoves++;
             break;
         case 4:
+            if (posX == x)
+            {
+                cout << "No se puede mover hacia la derecha, ya no hay casillas en esa direccion" << endl;
+                this_thread::sleep_for(chrono::seconds(3));
+                continue;
+            }
+            temporalMaze->editValueRD(posX, posY, ".");
+            posX++;
+            temporalMaze->editValueRD(posX, posY, "J");
             playerMoves++;
             break;
         case 5:

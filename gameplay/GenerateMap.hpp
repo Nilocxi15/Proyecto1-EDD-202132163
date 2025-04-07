@@ -1,4 +1,8 @@
 #pragma once
+#include <iostream>
+#include <cstdlib>
+
+using namespace std;
 
 #include "../doubleLinkedList/DoubleLinkedList.hpp"
 #include "../sparseMatrix/SparseMatrix.hpp"

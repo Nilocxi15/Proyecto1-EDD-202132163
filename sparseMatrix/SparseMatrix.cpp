@@ -129,38 +129,44 @@ void SparseMatrix::insert(int x, int y, string value)
     }
 }
 
-void SparseMatrix::rowIterator(int row)
+// Método para movimiento a la derecha (right) y abajo (down)
+void SparseMatrix::editValueRD(int x, int y, string value)
 {
-    cout << "--------------Recorrido por fila------------------" << endl;
-    HeaderNode *cell = rows.get(row);
-    if (cell == nullptr)
+    HeaderNode *row = rows.get(x);
+    if (row == nullptr)
     {
-        cout << "La fila " << row << " no existe" << endl;
         return;
     }
 
-    CellNode *temp = cell->getAccess();
+    CellNode *temp = row->getAccess();
     while (temp != nullptr)
     {
-        cout << "x: " << temp->getX() << " y: " << temp->getY() << " value: " << temp->getValue() << endl;
+        if (temp->getY() == y)
+        {
+            temp->setValue(value);
+            return;
+        }
         temp = temp->getRight();
     }
 }
 
-void SparseMatrix::columnIterator(int column)
+// Método para el movimiento a la izquierda (left) y arriba (up)
+void SparseMatrix::editValueLU(int x, int y, string value)
 {
-    cout << "--------------Recorrido por columna------------------" << endl;
-    HeaderNode *cell = columns.get(column);
-    if (cell == nullptr)
+    HeaderNode *column = columns.get(y);
+    if (column == nullptr)
     {
-        cout << "La columna " << column << " no existe" << endl;
         return;
     }
 
-    CellNode *temp = cell->getAccess();
+    CellNode *temp = column->getAccess();
     while (temp != nullptr)
     {
-        cout << "x: " << temp->getX() << " y: " << temp->getY() << " value: " << temp->getValue() << endl;
+        if (temp->getX() == x)
+        {
+            temp->setValue(value);
+            return;
+        }
         temp = temp->getDown();
     }
 }
@@ -168,7 +174,7 @@ void SparseMatrix::columnIterator(int column)
 // Getters
 string SparseMatrix::search(int x, int y) const
 {
-    HeaderNode *row = rows.get(x);
+    HeaderNode *row = rows.get(y);
     if (row == nullptr)
     {
         return "";
@@ -177,7 +183,7 @@ string SparseMatrix::search(int x, int y) const
     CellNode *temp = row->getAccess();
     while (temp != nullptr)
     {
-        if (temp->getY() == y)
+        if (temp->getY() == x)
         {
             return temp->getValue();
         }
