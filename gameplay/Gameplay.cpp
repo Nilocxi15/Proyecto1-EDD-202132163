@@ -161,13 +161,17 @@ void gameplay::displayMaze(int x, int y, int z)
             }
             else if (currentMaze <= halfSize)
             {
+                temporalMaze->editValueRD(posX, posY, ".");
                 temporalMaze = mazeList.getNext(currentMaze);
+                temporalMaze->editValueRD(posX, posY, "J");
                 currentMaze++;
             }
             else if (currentMaze > halfSize)
             {
+                temporalMaze->editValueRD(posX, posY, ".");
                 int iterator = mazeList.length() - currentMaze;
                 temporalMaze = mazeList.getPrev(iterator);
+                temporalMaze->editValueRD(posX, posY, "J");
                 currentMaze++;
             }
             playerMoves++;
@@ -176,19 +180,23 @@ void gameplay::displayMaze(int x, int y, int z)
         case 6:
             if (currentMaze == 1)
             {
-                cout << "No se puede avanzar, ya no hay laberintos atras" << endl;
+                cout << "No se puede retroceder, ya no hay laberintos atras" << endl;
                 this_thread::sleep_for(chrono::seconds(3));
             }
             else if (currentMaze <= halfSize)
             {
+                temporalMaze->editValueLU(posX, posY, ".");
                 int prevMaze = currentMaze - 2;
                 temporalMaze = mazeList.getNext(prevMaze);
+                temporalMaze->editValueLU(posX, posY, "J");
                 currentMaze--;
             }
             else if (currentMaze > halfSize)
             {
+                temporalMaze->editValueLU(posX, posY, ".");
                 int iterator = mazeList.length() - currentMaze + 2;
                 temporalMaze = mazeList.getPrev(iterator);
+                temporalMaze->editValueLU(posX, posY, "J");
                 currentMaze--;
             }
             playerMoves++;
