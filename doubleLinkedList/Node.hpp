@@ -11,7 +11,7 @@ private:
 
 public:
     // Constructores y destructor
-    explicit Node(SparseMatrix *matrix); // Constructor con un solo parámetro
+    explicit Node(SparseMatrix *matrix);
     ~Node();
 
     // Getters

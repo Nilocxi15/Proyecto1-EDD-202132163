@@ -56,10 +56,13 @@ void gameplay::startGame()
 
 void gameplay::displayMaze(int x, int y, int z)
 {
+    // VerifyBoxes verifyBoxes;
     SparseMatrix *temporalMaze;
     GenerateMap map;
 
     DoubleLinkedList mazeList = map.generateMaze(x, y, z);
+    vector<GameElement> *specialBoxes = map.getVector();
+
     int currentMaze = 1;
     int moveOption = 0;
     int halfSize = mazeList.length() / 2;
@@ -202,11 +205,48 @@ void gameplay::displayMaze(int x, int y, int z)
             playerMoves++;
             break;
         default:
-            currentMaze++;
+            cout << "Opcion no valida, por favor intente de nuevo" << endl;
+            this_thread::sleep_for(chrono::seconds(3));
             break;
         }
 
-        playerHealth = playerHealth - 5;
+        GameElement tempBox = verifyBoxes(posX, posY, currentMaze - 1, specialBoxes);
+
+        // Verificación de casillas especiales
+
+        if (tempBox.getName() != "")
+        {
+            if (tempBox.getName() == "ENEMIGO")
+            {
+                playerHealth = playerHealth - tempBox.getActionPoints();
+                cout << "Se ha encontrado un enemigo, usted ha perdido " << tempBox.getActionPoints() << " de salud" << endl;
+                this_thread::sleep_for(chrono::seconds(3));
+            }
+            else if (tempBox.getName() == "TRAMPA")
+            {
+                playerHealth = playerHealth - tempBox.getActionPoints();
+                cout << "Se ha encontrado una trampa, usted ha perdido " << tempBox.getActionPoints() << " de salud" << endl;
+                this_thread::sleep_for(chrono::seconds(3));
+            }
+            else if (tempBox.getName() == "POCION")
+            {
+                playerHealth = playerHealth + tempBox.getActionPoints();
+                cout << "Se ha encontrado con una pocion, usted ha ganado " << tempBox.getActionPoints() << " de salud" << endl;
+                this_thread::sleep_for(chrono::seconds(3));
+            }
+            else if (tempBox.getName() == "PISTA")
+            {
+                cout << "Usted ha encontrado una pista" << endl;
+                this_thread::sleep_for(chrono::seconds(3));
+            }
+            else if (tempBox.getName() == "TESORO")
+            {
+                cout << "Se ha encontrado el tesoro" << endl;
+                this_thread::sleep_for(chrono::seconds(3));
+                break;
+            }
+        }
+        
 
     } while (playerHealth > 0);
 
@@ -218,4 +258,18 @@ void gameplay::displayMaze(int x, int y, int z)
     // int elapsedTimeInSeconds = static_cast<int>(this->elapsedTime.count());
     // int minutes = elapsedTimeInSeconds / 60;
     // int seconds = elapsedTimeInSeconds % 60;
+}
+
+GameElement gameplay::verifyBoxes(int posX, int posY, int posZ, vector<GameElement> *elementsVector) const
+{
+
+    for (const auto &element : *elementsVector)
+    {
+        if (element.getPosX() == posX && element.getPosY() == posY && element.getPosZ() == posZ)
+        {
+            return element;
+        }
+    }
+
+    return GameElement("", 0, 0, 0, 0);
 }

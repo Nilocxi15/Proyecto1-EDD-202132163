@@ -28,7 +28,7 @@ private:
     chrono::duration<long, ratio<1>> elapsedTime;
 
     void displayMaze(int x, int y, int z);
-    void generateMaze();
+    GameElement verifyBoxes(int posX, int posY, int posZ, vector<GameElement> *elementsVector) const;
 
 public:
     void startGame();

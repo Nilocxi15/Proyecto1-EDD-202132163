@@ -4,10 +4,16 @@ DoubleLinkedList GenerateMap::generateMaze(int x, int y, int z) const
 {
     DoubleLinkedList mazeList;
 
+    // Inicializar el puntero specialBoxes
+
     int mainProb, subProb;
     int totalSize = x * y;
     int availableBoxes = totalSize * (((float)50) / ((float)100));
     availableBoxes--;
+
+    int posX = rand() % x + 1;
+    int posY = rand() % y + 1;
+    int posZ = rand() % z;
 
     for (int i = 0; i < z; i++)
     {
@@ -23,6 +29,13 @@ DoubleLinkedList GenerateMap::generateMaze(int x, int y, int z) const
                     continue;
                 }
 
+                if (j == posX && k == posY && i == posZ)
+                {
+                    maze->insert(j, k, "X");
+                    specialBoxes->push_back(GameElement("TESORO", j, k, i, 0));
+                    continue;
+                }
+
                 mainProb = rand() % 10 + 1;
                 if (mainProb <= 7)
                 {
@@ -30,26 +43,49 @@ DoubleLinkedList GenerateMap::generateMaze(int x, int y, int z) const
                 }
                 else if (tempCounter > 0)
                 {
-                    subProb = rand() % 10 + 1;
+                    subProb = rand() % 11 + 1;
 
                     if (subProb <= 3)
                     {
                         maze->insert(j, k, "E");
+                        int damage = rand() % 10 + 5;
+                        specialBoxes->push_back(GameElement("ENEMIGO", j, k, i, damage));
                         tempCounter--;
                     }
                     else if (subProb > 3 && subProb <= 6)
                     {
                         maze->insert(j, k, "T");
+                        int damage = rand() % 10 + 1;
+                        specialBoxes->push_back(GameElement("TRAMPA", j, k, i, damage));
                         tempCounter--;
                     }
                     else if (subProb > 6 && subProb <= 9)
                     {
                         maze->insert(j, k, "P");
+                        int heal = rand() % 10 + 1;
+                        specialBoxes->push_back(GameElement("POCION", j, k, i, heal));
                         tempCounter--;
                     }
-                    else if (subProb == 10)
+                    else if (subProb > 9 && subProb <= 11)
                     {
+                        int diffX = abs(posX - j);
+                        int diffY = abs(posY - k);
+                        int diffZ = abs(posZ - i);
                         maze->insert(j, k, "O");
+
+                        if (diffX == 1 || diffY == 1 || diffZ == 1)
+                        {
+                            specialBoxes->push_back(GameElement("PISTA", j, k, i, 1));
+                        }
+                        else if (diffX == 2 || diffY == 2 || diffZ == 2)
+                        {
+                            specialBoxes->push_back(GameElement("PISTA", j, k, i, 2));
+                        }
+                        else
+                        {
+                            specialBoxes->push_back(GameElement("PISTA", j, k, i, 3));
+                        }
+
                         tempCounter--;
                     }
                 }
@@ -63,5 +99,12 @@ DoubleLinkedList GenerateMap::generateMaze(int x, int y, int z) const
         mazeList.append(maze);
     }
 
+        
+
     return mazeList;
+}
+
+vector<GameElement> *GenerateMap::getVector() const
+{
+    return this->specialBoxes;
 }
