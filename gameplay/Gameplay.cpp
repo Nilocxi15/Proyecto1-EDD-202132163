@@ -245,6 +245,16 @@ void gameplay::displayMaze(int x, int y, int z)
                 this_thread::sleep_for(chrono::seconds(3));
                 break;
             }
+
+            for (size_t i = 0; i < specialBoxes->size(); i++)
+            {
+                if (tempBox.getPosX() == specialBoxes->at(i).getPosX() && tempBox.getPosY() == specialBoxes->at(i).getPosY() && tempBox.getPosZ() == specialBoxes->at(i).getPosZ())
+                {
+                    specialBoxes->erase(specialBoxes->begin() + i);
+                    
+                }
+            }
+            
         }
         
 
@@ -267,6 +277,7 @@ GameElement gameplay::verifyBoxes(int posX, int posY, int posZ, vector<GameEleme
     {
         if (element.getPosX() == posX && element.getPosY() == posY && element.getPosZ() == posZ)
         {
+            GameElement elementFound = element;            
             return element;
         }
     }
