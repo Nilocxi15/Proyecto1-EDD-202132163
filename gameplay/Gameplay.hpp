@@ -6,6 +6,7 @@
 #include <thread>
 #include <limits>
 #include <stdexcept>
+#include <fstream>
 
 #include "../sparseMatrix/SparseMatrix.hpp"
 #include "GenerateMap.hpp"
@@ -28,6 +29,7 @@ private:
     chrono::duration<long, ratio<1>> elapsedTime;
 
     void displayMaze(int x, int y, int z);
+    void saveGameHistory(const string &playerName, int playerScore, int playerMoves, int elapsedTimeInSeconds) const;
     GameElement verifyBoxes(int posX, int posY, int posZ, vector<GameElement> *elementsVector) const;
 
 public:

@@ -15,7 +15,8 @@ void gameplay::startGame()
 
     cout << "---------- INICIANDO EL JUEGO ----------" << endl;
     cout << "Ingrese su nombre: ";
-    cin >> this->playerName;
+    cin.ignore();
+    getline(cin, this->playerName);
 
     do
     {
@@ -68,6 +69,9 @@ void gameplay::displayMaze(int x, int y, int z)
     int halfSize = mazeList.length() / 2;
     int posX = 1;
     int posY = 1;
+
+    int trapsAndEnemies = 0;
+    int hints = 0;
 
     temporalMaze = mazeList.getFirst();
 
@@ -221,12 +225,22 @@ void gameplay::displayMaze(int x, int y, int z)
                 playerHealth = playerHealth - tempBox.getActionPoints();
                 cout << "Se ha encontrado un enemigo, usted ha perdido " << tempBox.getActionPoints() << " de salud" << endl;
                 this_thread::sleep_for(chrono::seconds(3));
+                if (playerScore > 0)
+                {
+                    playerScore = playerScore - 2;
+                }
+                trapsAndEnemies++;
             }
             else if (tempBox.getName() == "TRAMPA")
             {
                 playerHealth = playerHealth - tempBox.getActionPoints();
                 cout << "Se ha encontrado una trampa, usted ha perdido " << tempBox.getActionPoints() << " de salud" << endl;
                 this_thread::sleep_for(chrono::seconds(3));
+                if (playerScore > 0)
+                {
+                    playerScore = playerScore - 2;
+                }
+                trapsAndEnemies++;
             }
             else if (tempBox.getName() == "POCION")
             {
@@ -236,12 +250,27 @@ void gameplay::displayMaze(int x, int y, int z)
             }
             else if (tempBox.getName() == "PISTA")
             {
-                cout << "Usted ha encontrado una pista" << endl;
+                switch (tempBox.getActionPoints())
+                {
+                case 1:
+                    cout << "La pista es: CALIENTE" << endl;
+                    break;
+                case 2:
+                    cout << "La pista es: TIBIO" << endl;
+                    break;
+                case 3:
+                    cout << "La pista es: FRIO" << endl;
+                    break;
+                default:
+                    break;
+                }
                 this_thread::sleep_for(chrono::seconds(3));
+                hints++;
             }
             else if (tempBox.getName() == "TESORO")
             {
-                cout << "Se ha encontrado el tesoro" << endl;
+                cout << "\n---------- HA ENCONTRADO EL TESORO ----------" << endl;
+                playerScore = playerScore + 50;
                 this_thread::sleep_for(chrono::seconds(3));
                 break;
             }
@@ -251,23 +280,28 @@ void gameplay::displayMaze(int x, int y, int z)
                 if (tempBox.getPosX() == specialBoxes->at(i).getPosX() && tempBox.getPosY() == specialBoxes->at(i).getPosY() && tempBox.getPosZ() == specialBoxes->at(i).getPosZ())
                 {
                     specialBoxes->erase(specialBoxes->begin() + i);
-                    
                 }
             }
-            
         }
-        
+
+        playerScore = playerScore + 1;
 
     } while (playerHealth > 0);
 
-    system("clear");
-    cout << "---------- GAME OVER ----------" << endl;
     this->endTime = chrono::system_clock::now();
     this->elapsedTime = chrono::duration_cast<chrono::seconds>(this->endTime - this->startTime);
-
-    // int elapsedTimeInSeconds = static_cast<int>(this->elapsedTime.count());
-    // int minutes = elapsedTimeInSeconds / 60;
-    // int seconds = elapsedTimeInSeconds % 60;
+    int elapsedTimeInSeconds = static_cast<int>(this->elapsedTime.count());
+    system("clear");
+    cout << endl;
+    cout << "---------- GAME OVER ----------" << endl;
+    cout << "REPORTES:" << endl;
+    cout << "Nombre del jugador: " << this->playerName << endl;
+    cout << "Tiempo transcurrido: " << elapsedTimeInSeconds << " segundos" << endl;
+    cout << "Movimientos: " << this->playerMoves << endl;
+    cout << "Puntuacion: " << this->playerScore << endl;
+    cout << "Trampas o enemigos encontrados: " << trapsAndEnemies << endl;
+    cout << "Pistas encontradas: " << hints << endl;
+    saveGameHistory(this->playerName, this->playerScore, this->playerMoves, elapsedTimeInSeconds);
 }
 
 GameElement gameplay::verifyBoxes(int posX, int posY, int posZ, vector<GameElement> *elementsVector) const
@@ -277,10 +311,26 @@ GameElement gameplay::verifyBoxes(int posX, int posY, int posZ, vector<GameEleme
     {
         if (element.getPosX() == posX && element.getPosY() == posY && element.getPosZ() == posZ)
         {
-            GameElement elementFound = element;            
+            GameElement elementFound = element;
             return element;
         }
     }
 
     return GameElement("", 0, 0, 0, 0);
+}
+
+void gameplay::saveGameHistory(const string& playerName, int playerScore, int playerMoves, int elapsedTimeInSeconds) const
+{
+    ofstream file;
+    file.open("/home/jixcolin/Documentos/DocumentosUsac/EDD/Proyecto1/data/GameHistory.csv", ios::app);
+
+    if (file.fail())
+    {
+        cout << "Error al abrir o escribir en el archivo" << endl;
+        exit(1);
+    }
+
+    file << "\n" <<playerName << "," << playerScore << "," << elapsedTimeInSeconds << "," << playerMoves;
+
+    file.close();
 }

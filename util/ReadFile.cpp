@@ -24,7 +24,7 @@ void ReadFile::scoreSort()
 
         system("clear");
         cout << "---------- HISTORIAL DE PARTIDAS ORDENADO POR PUNTAJE ----------" << endl;
-        cout << "Nombre\t\tPuntaje\t\tMovimientos\t\tTiempo (mins)" << endl;
+        cout << "Nombre\t\tPuntaje\t\tTiempo (seg)\t\tMovimiento" << endl;
         for (const auto &row : mainVector)
         {
             cout << row[0] << "\t\t" << row[1] << "\t\t" << row[2] << "\t\t" << row[3] << endl;
@@ -56,7 +56,7 @@ void ReadFile::nameSort()
 
         system("clear");
         cout << "---------- HISTORIAL DE PARTIDAS ORDENADO POR PUNTAJE ----------" << endl;
-        cout << "Nombre\t\tPuntaje\t\tMovimientos\t\tTiempo (mins)" << endl;
+        cout << "Nombre\t\tPuntaje\t\tTiempo (seg)\t\tMovimientos" << endl;
         for (const auto &row : mainVector)
         {
             cout << row[0] << "\t\t" << row[1] << "\t\t" << row[2] << "\t\t" << row[3] << endl;
