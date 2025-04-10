@@ -195,7 +195,7 @@ string SparseMatrix::search(int x, int y) const
 
 void SparseMatrix::printMatrix()
 {
-    cout << "--------------Matriz dispersa------------------" << endl;
+    cout << "------------------------ LABERINTO ----------------------------" << endl;
     for (int i = 1; i <= rows.length(); i++)
     {
         for (int j = 1; j <= columns.length(); j++)

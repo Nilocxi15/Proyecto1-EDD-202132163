@@ -57,9 +57,9 @@ void gameplay::startGame()
 
 void gameplay::displayMaze(int x, int y, int z)
 {
-    // VerifyBoxes verifyBoxes;
     SparseMatrix *temporalMaze;
     GenerateMap map;
+    Queue movesQueue;
 
     DoubleLinkedList mazeList = map.generateMaze(x, y, z);
     vector<GameElement> *specialBoxes = map.getVector();
@@ -73,7 +73,18 @@ void gameplay::displayMaze(int x, int y, int z)
     int trapsAndEnemies = 0;
     int hints = 0;
 
+    string treasurePosition;
+
     temporalMaze = mazeList.getFirst();
+    movesQueue.enqueue("(1,1,1)");
+
+    for (auto &element : *specialBoxes)
+    {
+        if (element.getName() == "TESORO")
+        {
+            treasurePosition = "(" + to_string(element.getPosX()) + "," + to_string(element.getPosY()) + "," + to_string(element.getPosZ() + 1) + ")";
+        }
+    }
 
     do
     {
@@ -215,6 +226,8 @@ void gameplay::displayMaze(int x, int y, int z)
         }
 
         GameElement tempBox = verifyBoxes(posX, posY, currentMaze - 1, specialBoxes);
+        playerScore = playerScore + 1;
+        movesQueue.enqueue("(" + to_string(posX) + "," + to_string(posY) + "," + to_string(currentMaze) + ")");
 
         // Verificación de casillas especiales
 
@@ -284,24 +297,17 @@ void gameplay::displayMaze(int x, int y, int z)
             }
         }
 
-        playerScore = playerScore + 1;
-
     } while (playerHealth > 0);
 
     this->endTime = chrono::system_clock::now();
     this->elapsedTime = chrono::duration_cast<chrono::seconds>(this->endTime - this->startTime);
     int elapsedTimeInSeconds = static_cast<int>(this->elapsedTime.count());
-    system("clear");
-    cout << endl;
-    cout << "---------- GAME OVER ----------" << endl;
-    cout << "REPORTES:" << endl;
-    cout << "Nombre del jugador: " << this->playerName << endl;
-    cout << "Tiempo transcurrido: " << elapsedTimeInSeconds << " segundos" << endl;
-    cout << "Movimientos: " << this->playerMoves << endl;
-    cout << "Puntuacion: " << this->playerScore << endl;
-    cout << "Trampas o enemigos encontrados: " << trapsAndEnemies << endl;
-    cout << "Pistas encontradas: " << hints << endl;
-    saveGameHistory(this->playerName, this->playerScore, this->playerMoves, elapsedTimeInSeconds);
+    showResults(elapsedTimeInSeconds, trapsAndEnemies, hints, treasurePosition);
+    saveGameHistory(elapsedTimeInSeconds);
+    for (int i = 0; i < movesQueue.length(); i++)
+    {
+        cout << "Paso #" << i + 1 << ": " << movesQueue.dequeue() << endl;
+    }
 }
 
 GameElement gameplay::verifyBoxes(int posX, int posY, int posZ, vector<GameElement> *elementsVector) const
@@ -319,7 +325,7 @@ GameElement gameplay::verifyBoxes(int posX, int posY, int posZ, vector<GameEleme
     return GameElement("", 0, 0, 0, 0);
 }
 
-void gameplay::saveGameHistory(const string& playerName, int playerScore, int playerMoves, int elapsedTimeInSeconds) const
+void gameplay::saveGameHistory(int elapsedTimeInSeconds) const
 {
     ofstream file;
     file.open("/home/jixcolin/Documentos/DocumentosUsac/EDD/Proyecto1/data/GameHistory.csv", ios::app);
@@ -330,7 +336,24 @@ void gameplay::saveGameHistory(const string& playerName, int playerScore, int pl
         exit(1);
     }
 
-    file << "\n" <<playerName << "," << playerScore << "," << elapsedTimeInSeconds << "," << playerMoves;
+    file << "\n"
+         << this->playerName << "," << this->playerScore << "," << elapsedTimeInSeconds << "," << this->playerMoves;
 
     file.close();
+}
+
+void gameplay::showResults(int elapsedTimeInSeconds, int trapsAndEnemies, int hints, string treasurePosition)
+{
+    system("clear");
+    cout << "---------- GAME OVER ----------" << endl;
+    cout << "REPORTES:" << endl;
+    cout << "Nombre del jugador: " << this->playerName << endl;
+    cout << "Tiempo transcurrido: " << elapsedTimeInSeconds << " segundos" << endl;
+    cout << "Movimientos: " << this->playerMoves << endl;
+    cout << "Puntuacion: " << this->playerScore << endl;
+    cout << "Trampas o enemigos encontrados: " << trapsAndEnemies << endl;
+    cout << "Pistas encontradas: " << hints << endl;
+    cout << "Ubicacion del tesoro: " << treasurePosition << endl;
+    cout << "Distancia hacia el tesoro: ";
+    cout << "Su trayectoria: " << endl;
 }

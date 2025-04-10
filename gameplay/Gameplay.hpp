@@ -10,6 +10,7 @@
 
 #include "../sparseMatrix/SparseMatrix.hpp"
 #include "GenerateMap.hpp"
+#include "../queue/Queue.hpp"
 
 using namespace std;
 
@@ -29,7 +30,8 @@ private:
     chrono::duration<long, ratio<1>> elapsedTime;
 
     void displayMaze(int x, int y, int z);
-    void saveGameHistory(const string &playerName, int playerScore, int playerMoves, int elapsedTimeInSeconds) const;
+    void saveGameHistory(int elapsedTimeInSeconds) const;
+    void showResults(int elapsedTimeInSeconds, int trapsAndEnemies, int hints, string treasurePosition);
     GameElement verifyBoxes(int posX, int posY, int posZ, vector<GameElement> *elementsVector) const;
 
 public:
