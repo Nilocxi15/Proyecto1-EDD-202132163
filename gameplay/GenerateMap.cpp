@@ -31,7 +31,7 @@ DoubleLinkedList GenerateMap::generateMaze(int x, int y, int z) const
 
                 if (j == posX && k == posY && i == posZ)
                 {
-                    maze->insert(j, k, "X");
+                    maze->insert(j, k, ".");
                     specialBoxes->push_back(GameElement("TESORO", j, k, i, 0));
                     continue;
                 }
@@ -47,21 +47,21 @@ DoubleLinkedList GenerateMap::generateMaze(int x, int y, int z) const
 
                     if (subProb <= 3)
                     {
-                        maze->insert(j, k, "E");
+                        maze->insert(j, k, ".");
                         int damage = rand() % 10 + 5;
                         specialBoxes->push_back(GameElement("ENEMIGO", j, k, i, damage));
                         tempCounter--;
                     }
                     else if (subProb > 3 && subProb <= 6)
                     {
-                        maze->insert(j, k, "T");
+                        maze->insert(j, k, ".");
                         int damage = rand() % 10 + 1;
                         specialBoxes->push_back(GameElement("TRAMPA", j, k, i, damage));
                         tempCounter--;
                     }
                     else if (subProb > 6 && subProb <= 9)
                     {
-                        maze->insert(j, k, "P");
+                        maze->insert(j, k, ".");
                         int heal = rand() % 10 + 1;
                         specialBoxes->push_back(GameElement("POCION", j, k, i, heal));
                         tempCounter--;
@@ -71,7 +71,7 @@ DoubleLinkedList GenerateMap::generateMaze(int x, int y, int z) const
                         int diffX = abs(posX - j);
                         int diffY = abs(posY - k);
                         int diffZ = abs(posZ - i);
-                        maze->insert(j, k, "O");
+                        maze->insert(j, k, ".");
 
                         if (diffX <= 1 || diffY <= 1 || diffZ <= 1)
                         {

@@ -60,6 +60,7 @@ void gameplay::displayMaze(int x, int y, int z)
     SparseMatrix *temporalMaze;
     GenerateMap map;
     Queue movesQueue;
+    BoxesDistance boxesDistance;
 
     DoubleLinkedList mazeList = map.generateMaze(x, y, z);
     vector<GameElement> *specialBoxes = map.getVector();
@@ -278,6 +279,7 @@ void gameplay::displayMaze(int x, int y, int z)
                     break;
                 }
                 this_thread::sleep_for(chrono::seconds(3));
+                boxesDistance.addBox(tempBox);
                 hints++;
             }
             else if (tempBox.getName() == "TESORO")
@@ -308,6 +310,9 @@ void gameplay::displayMaze(int x, int y, int z)
     {
         cout << "Paso #" << i + 1 << ": " << movesQueue.dequeue() << endl;
     }
+    ReadFile file;
+    file.loadData();
+    file.topTen();
 }
 
 GameElement gameplay::verifyBoxes(int posX, int posY, int posZ, vector<GameElement> *elementsVector) const
@@ -354,6 +359,5 @@ void gameplay::showResults(int elapsedTimeInSeconds, int trapsAndEnemies, int hi
     cout << "Trampas o enemigos encontrados: " << trapsAndEnemies << endl;
     cout << "Pistas encontradas: " << hints << endl;
     cout << "Ubicacion del tesoro: " << treasurePosition << endl;
-    cout << "Distancia hacia el tesoro: ";
     cout << "Su trayectoria: " << endl;
 }

@@ -55,11 +55,146 @@ void ReadFile::nameSort()
         }
 
         system("clear");
-        cout << "---------- HISTORIAL DE PARTIDAS ORDENADO POR PUNTAJE ----------" << endl;
+        cout << "---------- HISTORIAL DE PARTIDAS ORDENADO POR NOMBRE ----------" << endl;
         cout << "Nombre\t\tPuntaje\t\tTiempo (seg)\t\tMovimientos" << endl;
         for (const auto &row : mainVector)
         {
             cout << row[0] << "\t\t" << row[1] << "\t\t" << row[2] << "\t\t" << row[3] << endl;
+        }
+    }
+}
+
+void ReadFile::topTen()
+{
+    if (mainVector.empty())
+    {
+        cout << "No hay registros de jugadores" << endl;
+        return;
+    }
+    else
+    {
+        cout << "Como desea visualizar la tabla de los mejores jugadores?" << endl;
+        cout << "1. Ordenar por puntaje" << endl;
+        cout << "2. Ordenar por nombre" << endl;
+        cout << "3. No mostrar" << endl;
+        cout << "Opcion: ";
+        int option;
+        cin >> option;
+
+        switch (option)
+        {
+        case 1:
+        {
+            for (size_t i = 1; i < mainVector.size(); ++i)
+            {
+                vector<string> key = mainVector[i];
+                int j = i - 1;
+
+                while (j >= 0 && stoi(mainVector[j][1]) < stoi(key[1]))
+                {
+                    mainVector[j + 1] = mainVector[j];
+                    j--;
+                }
+                mainVector[j + 1] = key;
+            }
+
+            cout << "\n\n---------- TOP 10 JUGADORES ----------" << endl;
+            cout << "Nombre\t\tPuntaje\t\tTiempo (seg)\t\tMovimientos" << endl;
+
+            if (mainVector.size() < 10)
+            {
+                for (const auto &row : mainVector)
+                {
+                    cout << row[0] << "\t\t" << row[1] << "\t\t" << row[2] << "\t\t" << row[3] << endl;
+                }
+            }
+            else
+            {
+                for (size_t i = 0; i < 10; ++i)
+                {
+                    cout << mainVector[i][0] << "\t\t" << mainVector[i][1] << "\t\t" << mainVector[i][2] << "\t\t" << mainVector[i][3] << endl;
+                }
+            }
+            break;
+        }
+        case 2:
+        {
+            for (size_t i = 1; i < mainVector.size(); ++i)
+            {
+                vector<string> key = mainVector[i];
+                int j = i - 1;
+
+                while (j >= 0 && stoi(mainVector[j][1]) < stoi(key[1]))
+                {
+                    mainVector[j + 1] = mainVector[j];
+                    j--;
+                }
+                mainVector[j + 1] = key;
+            }
+
+            vector<vector<string>> tempVector;
+
+            cout << "\n\n---------- TOP 10 JUGADORES ----------" << endl;
+            cout << "Nombre\t\tPuntaje\t\tTiempo (seg)\t\tMovimientos" << endl;
+
+            if (mainVector.size() < 10)
+            {
+                for (const auto &row : mainVector)
+                {
+                    tempVector.push_back(row);
+                }
+
+                for (size_t i = 1; i < tempVector.size(); ++i)
+                {
+                    vector<string> key = tempVector[i];
+                    int j = i - 1;
+
+                    while (j >= 0 && tempVector[j][0] > key[0])
+                    {
+                        tempVector[j + 1] = tempVector[j];
+                        j--;
+                    }
+                    tempVector[j + 1] = key;
+                }
+
+                for (const auto &row : tempVector)
+                {
+                    cout << row[0] << "\t\t" << row[1] << "\t\t" << row[2] << "\t\t" << row[3] << endl;
+                }
+            }
+            else
+            {
+                for (size_t i = 0; i < 10; ++i)
+                {
+                    tempVector.push_back(mainVector[i]);
+                }
+
+                for (size_t i = 1; i < tempVector.size(); ++i)
+                {
+                    vector<string> key = tempVector[i];
+                    int j = i - 1;
+
+                    while (j >= 0 && tempVector[j][0] > key[0])
+                    {
+                        tempVector[j + 1] = tempVector[j];
+                        j--;
+                    }
+                    tempVector[j + 1] = key;
+                }
+
+                for (size_t i = 0; i < 10; ++i)
+                {
+                    cout << tempVector[i][0] << "\t\t" << tempVector[i][1] << "\t\t" << tempVector[i][2] << "\t\t" << tempVector[i][3] << endl;
+                }
+            }
+            break;
+        }
+        case 3:
+            system("clear");
+            break;
+        default:
+            cout << "Opcion no valida" << endl;
+            break;
         }
     }
 }

@@ -11,6 +11,8 @@
 #include "../sparseMatrix/SparseMatrix.hpp"
 #include "GenerateMap.hpp"
 #include "../queue/Queue.hpp"
+#include "../util/BoxesDistance.hpp"
+#include "../util/ReadFile.hpp"
 
 using namespace std;
 
