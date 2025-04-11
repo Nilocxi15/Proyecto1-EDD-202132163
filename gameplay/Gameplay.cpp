@@ -60,6 +60,7 @@ void gameplay::displayMaze(int x, int y, int z)
     SparseMatrix *temporalMaze;
     GenerateMap map;
     Queue movesQueue;
+    GameQueue *gameQueue = new GameQueue();
     BoxesDistance boxesDistance;
 
     DoubleLinkedList mazeList = map.generateMaze(x, y, z);
@@ -75,6 +76,9 @@ void gameplay::displayMaze(int x, int y, int z)
     int hints = 0;
 
     string treasurePosition;
+    int treasureX = 0;
+    int treasureY = 0;
+    int treasureZ = 0;
 
     temporalMaze = mazeList.getFirst();
     movesQueue.enqueue("(1,1,1)");
@@ -84,6 +88,9 @@ void gameplay::displayMaze(int x, int y, int z)
         if (element.getName() == "TESORO")
         {
             treasurePosition = "(" + to_string(element.getPosX()) + "," + to_string(element.getPosY()) + "," + to_string(element.getPosZ() + 1) + ")";
+            treasureX = element.getPosX();
+            treasureY = element.getPosY();
+            treasureZ = element.getPosZ();
         }
     }
 
@@ -264,6 +271,7 @@ void gameplay::displayMaze(int x, int y, int z)
             }
             else if (tempBox.getName() == "PISTA")
             {
+                gameQueue->enqueue(tempBox);
                 switch (tempBox.getActionPoints())
                 {
                 case 1:
@@ -279,7 +287,6 @@ void gameplay::displayMaze(int x, int y, int z)
                     break;
                 }
                 this_thread::sleep_for(chrono::seconds(3));
-                boxesDistance.addBox(tempBox);
                 hints++;
             }
             else if (tempBox.getName() == "TESORO")
@@ -310,9 +317,12 @@ void gameplay::displayMaze(int x, int y, int z)
     {
         cout << "Paso #" << i + 1 << ": " << movesQueue.dequeue() << endl;
     }
+    cout << endl;
     ReadFile file;
     file.loadData();
     file.topTen();
+    cout << endl;
+    boxesDistance.printBoxes(gameQueue, treasureX, treasureY, treasureZ);
 }
 
 GameElement gameplay::verifyBoxes(int posX, int posY, int posZ, vector<GameElement> *elementsVector) const
@@ -359,5 +369,5 @@ void gameplay::showResults(int elapsedTimeInSeconds, int trapsAndEnemies, int hi
     cout << "Trampas o enemigos encontrados: " << trapsAndEnemies << endl;
     cout << "Pistas encontradas: " << hints << endl;
     cout << "Ubicacion del tesoro: " << treasurePosition << endl;
-    cout << "Su trayectoria: " << endl;
+    cout << "\nSu trayectoria: " << endl;
 }

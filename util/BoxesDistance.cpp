@@ -1,16 +1,11 @@
 #include "BoxesDistance.hpp"
 
-void BoxesDistance::addBox(GameElement &box)
+void BoxesDistance::printBoxes(GameQueue *queue, int posX, int posY, int posZ)
 {
-    if (queue == nullptr)
-    {
-        queue = new GameQueue();
-    }
-    queue->enqueue(box);
-}
+    int treasureX = posX;
+    int treasureY = posY;
+    int treasureZ = posZ;
 
-void BoxesDistance::printBoxes()
-{
     if (queue == nullptr || queue->length() == 0)
     {
         cout << "No encontro ninguna pista." << endl;
@@ -21,6 +16,8 @@ void BoxesDistance::printBoxes()
     for (int i = 0; i < queue->length(); i++)
     {
         GameElement box = queue->dequeue();
-        cout << "Caja #" << i + 1 << ": " << box.getName() << endl;
+        int boxDistance = abs(box.getPosX() - treasureX) + abs(box.getPosY() - treasureY) + abs(box.getPosZ() - treasureZ);
+        cout << "La pista en la ubicacion (" << box.getPosX() << "," << box.getPosY() << "," << box.getPosZ();
+        cout << ") se encontraba " << boxDistance << " casillas de distancia del tesoro" << endl;
     }
 }

@@ -71,13 +71,13 @@ DoubleLinkedList GenerateMap::generateMaze(int x, int y, int z) const
                         int diffX = abs(posX - j);
                         int diffY = abs(posY - k);
                         int diffZ = abs(posZ - i);
-                        maze->insert(j, k, ".");
+                        maze->insert(j, k, "P");
 
-                        if (diffX <= 1 || diffY <= 1 || diffZ <= 1)
+                        if (diffX <= 1 && diffY <= 1 && diffZ <= 1)
                         {
                             specialBoxes->push_back(GameElement("PISTA", j, k, i, 1));
                         }
-                        else if (diffX == 2 || diffY == 2 || diffZ == 2)
+                        else if (diffX <= 2 && diffY <= 2 && diffZ <= 2)
                         {
                             specialBoxes->push_back(GameElement("PISTA", j, k, i, 2));
                         }

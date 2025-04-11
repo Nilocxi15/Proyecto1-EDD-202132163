@@ -8,10 +8,6 @@ using namespace std;
 
 class BoxesDistance
 {
-private:
-    GameQueue *queue;
-    
 public:
-    void addBox(GameElement &box);
-    void printBoxes();
+    void printBoxes(GameQueue *queue, int posX, int posY, int posZ);
 };

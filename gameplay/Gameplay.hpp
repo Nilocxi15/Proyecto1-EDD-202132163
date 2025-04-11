@@ -13,6 +13,7 @@
 #include "../queue/Queue.hpp"
 #include "../util/BoxesDistance.hpp"
 #include "../util/ReadFile.hpp"
+#include "../queue/GameQueue.hpp"
 
 using namespace std;
 
